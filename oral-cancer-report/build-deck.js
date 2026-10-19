@@ -94,17 +94,33 @@ const SRC = (s, t) => txt(s, "資料來源：" + t, { x: 0.5, y: 4.92, w: 9.0, h
     txt(s, a, { x: x + 0.7, y, w: 3.7, h: 0.5, fontSize: 18, color: HEX.ink, valign: "middle" });
   });
 
+  // 2b One-minute summary
+  s = contentSlide("一分鐘看懂口腔癌", "開場");
+  const quick = [
+    [fa.FaQuestion, "是什麼", "長在嘴巴裡的癌症"], [fa.FaUsers, "多常見", "每年約 8,500 人得病"],
+    [fa.FaExclamationTriangle, "誰最危險", "吃檳榔、抽菸、喝酒的人"], [fa.FaEye, "怎麼發現", "嘴破兩週沒好就要看醫生"],
+    [fa.FaShieldAlt, "怎麼預防", "戒菸檳＋每 2 年免費檢查"], [fa.FaHeartbeat, "好消息", "早發現，8 成以上能治好"],
+  ];
+  for (let i = 0; i < quick.length; i++) {
+    const col = i % 3, row = Math.floor(i / 3);
+    const x = 0.5 + col * 3.05, y = 1.25 + row * 1.8;
+    card(s, x, y, 2.85, 1.6, row === 0 ? HEX.rose : HEX.mint, "quick-" + i);
+    await iconCircle(s, quick[i][0], x + 0.2, y + 0.2, 0.55, row === 0 ? HEX.berry : HEX.teal, HEX.white);
+    txt(s, quick[i][1], { x: x + 0.9, y: y + 0.2, w: 1.8, h: 0.55, fontSize: 18, bold: true, color: row === 0 ? HEX.berry : HEX.teal, valign: "middle" });
+    txt(s, quick[i][2], { x: x + 0.2, y: y + 0.9, w: 2.5, h: 0.55, fontSize: 15, color: HEX.ink, valign: "top" });
+  }
+
   // 3 Anatomy & function
   pres.addSection({ title: "器官與定義" });
-  s = contentSlide("口腔：消化與呼吸的入口", "器官與定義");
+  s = contentSlide("嘴巴每天幫我們做很多事", "器官與定義");
   card(s, 0.5, 1.25, 3.6, 3.55, HEX.rose, "parts-card");
-  txt(s, "口腔包含哪些部位", { x: 0.75, y: 1.4, w: 3.2, h: 0.4, fontSize: 16, bold: true, color: HEX.berry });
-  txt(s, ["唇", "頰黏膜（台灣最常見部位之一）", "舌頭前 2/3", "口底", "上、下牙齦", "硬顎", "臼齒後三角"].map((t, i, a) => ({ text: t, options: { bullet: true, breakLine: i < a.length - 1 } })),
+  txt(s, "嘴巴裡哪些地方會長", { x: 0.75, y: 1.4, w: 3.2, h: 0.4, fontSize: 16, bold: true, color: HEX.berry });
+  txt(s, ["嘴唇", "臉頰內側（台灣最常見）", "舌頭", "舌頭下面", "牙齦（包住牙齒的肉）", "上顎（嘴巴的天花板）", "最裡面大牙的後方"].map((t, i, a) => ({ text: t, options: { bullet: true, breakLine: i < a.length - 1 } })),
     { x: 0.75, y: 1.85, w: 3.2, h: 2.8, fontSize: 14, color: HEX.ink, paraSpaceAfter: 4, valign: "top" });
   const funcs = [
-    [fa.FaUtensils, "咀嚼", "磨碎食物、混合唾液"], [fa.FaArrowDown, "吞嚥", "舌頭推送食團入咽"],
-    [fa.FaFlask, "消化", "唾液澱粉酶分解澱粉"], [fa.FaCommentDots, "語言", "舌、唇、齒配合發音"],
-    [fa.FaLemon, "味覺", "味蕾感受五種味道"], [fa.FaShieldAlt, "防禦", "黏膜與唾液阻擋細菌"],
+    [fa.FaUtensils, "咬碎食物", "牙齒和舌頭把食物磨碎"], [fa.FaArrowDown, "吞東西", "舌頭把食物推進喉嚨"],
+    [fa.FaFlask, "開始消化", "飯嚼久了會變甜"], [fa.FaCommentDots, "說話", "舌頭、嘴唇一起發音"],
+    [fa.FaLemon, "嚐味道", "酸甜苦鹹都靠舌頭"], [fa.FaShieldAlt, "擋細菌", "口水像一道防護牆"],
   ];
   for (let i = 0; i < funcs.length; i++) {
     const col = i % 2, row = Math.floor(i / 2);
@@ -119,33 +135,33 @@ const SRC = (s, t) => txt(s, "資料來源：" + t, { x: 0.5, y: 4.92, w: 9.0, h
   s = contentSlide("什麼是口腔癌", "器官與定義");
   card(s, 0.5, 1.25, 9.0, 1.05, HEX.rose, "def-card");
   txt(s, [
-    { text: "口腔黏膜細胞受長期刺激（檳榔、菸、酒）產生基因突變，不受控制地增生並侵犯周圍組織，甚至轉移到頸部淋巴結。", options: { breakLine: true } },
-    { text: "約 9 成為「鱗狀上皮細胞癌」。", options: { bold: true, color: HEX.berry } },
+    { text: "嘴巴內側的表皮長年被檳榔、菸、酒刺激，就像同一個地方一直被磨破，久了細胞「壞掉」開始亂長，", options: {} },
+    { text: "這就是口腔癌。", options: { bold: true, color: HEX.berry } },
   ], { x: 0.75, y: 1.35, w: 8.5, h: 0.85, fontSize: 15, color: HEX.ink, valign: "middle" });
   // progression flow
-  const steps = [["正常黏膜", HEX.mint, HEX.teal], ["癌前病變", "FBE7D6", HEX.gold], ["早期癌 (1–2 期)", HEX.rose, HEX.berry], ["晚期癌 (3–4 期)", "E9C9D3", HEX.ink]];
+  const steps = [["正常的嘴巴", HEX.mint, HEX.teal], ["警告病變", "FBE7D6", HEX.gold], ["早期癌 (第1–2期)", HEX.rose, HEX.berry], ["晚期癌 (第3–4期)", "E9C9D3", HEX.ink]];
   steps.forEach((st, i) => {
     const x = 0.5 + i * 2.32;
     card(s, x, 2.6, 2.0, 0.8, st[1], "step-" + i);
     txt(s, st[0], { x, y: 2.6, w: 2.0, h: 0.8, fontSize: 15, bold: true, color: st[2], align: "center", valign: "middle" });
     if (i < 3) s.addShape(pres.shapes.CHEVRON, { x: x + 2.06, y: 2.85, w: 0.2, h: 0.3, fill: { color: "B98A9A" }, line: { color: "B98A9A" } });
   });
-  txt(s, "癌前病變：白斑、紅斑、口腔黏膜下纖維化、疣狀增生、扁平苔癬 —— 及早發現就能阻止惡化", { x: 0.5, y: 3.6, w: 9.0, h: 0.4, fontSize: 14, color: HEX.ink });
-  txt(s, "分期：依 TNM（腫瘤大小 T、淋巴結 N、遠處轉移 M）分為 0–4 期", { x: 0.5, y: 4.05, w: 9.0, h: 0.4, fontSize: 14, color: HEX.ink });
-  txt(s, "統計範圍：國健署癌症登記的「口腔癌」含口咽、下咽", { x: 0.5, y: 4.5, w: 9.0, h: 0.35, fontSize: 12, italic: true, color: HEX.grey });
+  txt(s, "警告病變（癌前病變）：還不是癌，但可能變成癌，例如白斑、紅斑、嘴巴變硬；早發現就能阻止", { x: 0.5, y: 3.6, w: 9.0, h: 0.4, fontSize: 14, color: HEX.ink });
+  txt(s, "分期：數字越大越嚴重；第 3、4 期代表腫瘤很大，或已跑到脖子或其他器官", { x: 0.5, y: 4.05, w: 9.0, h: 0.4, fontSize: 14, color: HEX.ink });
+  txt(s, "小提醒：政府統計的「口腔癌」也包含喉嚨上段的癌症", { x: 0.5, y: 4.5, w: 9.0, h: 0.35, fontSize: 12, italic: true, color: HEX.grey });
   SRC(s, "臺北榮總 口腔癌治療準則");
 
   // 5 Stats
   pres.addSection({ title: "台灣現況" });
   s = contentSlide("台灣每年 8 千多人罹患口腔癌", "台灣現況");
-  const stats = [["8,522", "人", "112 年新發生人數\n（全癌第 6 位）", HEX.berry], ["3,697", "人", "114 年死亡人數\n（癌症死因第 6 位）", HEX.ink], ["第 4", "位", "男性十大癌症\n（男性 7,641 人）", HEX.berry], ["60", "歲", "發生年齡中位數\n（112 年）", HEX.teal]];
+  const stats = [["8,522", "人", "2023 年新得到\n口腔癌的人數", HEX.berry], ["3,697", "人", "2025 年因口腔癌\n過世的人數", HEX.ink], ["第 4", "名", "男性最常得的\n癌症排名", HEX.berry], ["60", "歲", "一半的病人\n不到 60 歲", HEX.teal]];
   stats.forEach((st, i) => {
     const x = 0.5 + i * 2.3;
     card(s, x, 1.3, 2.1, 2.6, i === 1 ? "EFE7EA" : (i === 3 ? HEX.mint : HEX.rose), "stat-" + i);
     txt(s, [{ text: st[0], options: { fontSize: 40, bold: true, color: st[3] } }, { text: " " + st[1], options: { fontSize: 16, color: st[3] } }], { x: x + 0.15, y: 1.55, w: 1.8, h: 0.9, align: "center", valign: "middle" });
     txt(s, st[2], { x: x + 0.15, y: 2.55, w: 1.8, h: 1.1, fontSize: 13, color: HEX.ink, align: "center", valign: "top" });
   });
-  txt(s, "114 年口腔癌標準化死亡率較 113 年下降；每十萬人口死亡率 15.8 人", { x: 0.5, y: 4.15, w: 9.0, h: 0.4, fontSize: 14, color: HEX.teal, bold: true });
+  txt(s, "平均每天約 23 人得病、約 10 人過世；扣除人口變老的影響後，2025 年比 2024 年改善", { x: 0.5, y: 4.15, w: 9.0, h: 0.4, fontSize: 14, color: HEX.teal, bold: true });
   SRC(s, "國健署 112 年癌症登記報告（2025 公布）；衛福部 114 年死因統計（2026 公布）");
   s.addNotes("癌症登記最新為 112 年資料，死因統計最新為 114 年資料。口腔癌新發 8,522 人，比 111 年多 172 人。");
 
@@ -157,10 +173,10 @@ const SRC = (s, t) => txt(s, "資料來源：" + t, { x: 0.5, y: 4.92, w: 9.0, h
     dataLabelColor: HEX.white, dataLabelFontSize: 14, dataLabelFontFace: "+mn-lt", showTitle: false,
   });
   txt(s, "7,641", { x: 5.3, y: 1.4, w: 4.2, h: 0.8, fontSize: 44, bold: true, color: HEX.berry });
-  txt(s, "112 年男性口腔癌新發生人數，較 111 年增加 169 人", { x: 5.3, y: 2.2, w: 4.2, h: 0.6, fontSize: 14, color: HEX.ink, valign: "top" });
+  txt(s, "2023 年新得到口腔癌的男性，每 10 個病人約 9 個是男生", { x: 5.3, y: 2.2, w: 4.2, h: 0.6, fontSize: 14, color: HEX.ink, valign: "top" });
   txt(s, [
     { text: "男性患者逾 8 成吸菸、約 7 成嚼檳榔", options: { bullet: true, breakLine: true } },
-    { text: "好發於中壯年，常是家庭經濟支柱", options: { bullet: true } },
+    { text: "多是中年男性，常是家裡主要賺錢的人", options: { bullet: true } },
   ], { x: 5.3, y: 3.0, w: 4.2, h: 1.2, fontSize: 14, color: HEX.ink, paraSpaceAfter: 6, valign: "top" });
   SRC(s, "國健署 112 年癌症登記報告（女性人數 = 8,522 − 7,641）；國健署新聞稿");
 
@@ -172,14 +188,14 @@ const SRC = (s, t) => txt(s, "資料來源：" + t, { x: 0.5, y: 4.92, w: 9.0, h
     showValue: true, dataLabelPosition: "outEnd", dataLabelFontSize: 14, dataLabelFontFace: "+mn-lt", dataLabelColor: HEX.ink, dataLabelFormatCode: "0\"倍\"",
     catAxisLabelColor: HEX.ink, catAxisLabelFontSize: 13, catAxisLabelFontFace: "+mn-lt", valAxisHidden: true,
     valGridLine: { style: "none" }, catGridLine: { style: "none" }, showLegend: false,
-    showTitle: true, title: "罹患口腔癌風險（與不使用者相比）", titleFontSize: 13, titleColor: HEX.grey, titleFontFace: "+mn-lt",
+    showTitle: true, title: "得口腔癌的機會是一般人的幾倍", titleFontSize: 13, titleColor: HEX.grey, titleFontFace: "+mn-lt",
   });
   card(s, 5.8, 1.25, 3.7, 3.55, HEX.rose, "iarc-card");
-  txt(s, "檳榔本身就是一級致癌物", { x: 6.0, y: 1.4, w: 3.3, h: 0.45, fontSize: 16, bold: true, color: HEX.berry });
+  txt(s, "檳榔本身就會致癌", { x: 6.0, y: 1.4, w: 3.3, h: 0.45, fontSize: 16, bold: true, color: HEX.berry });
   txt(s, [
-    { text: "IARC 將檳榔子列為第一級致癌物，不加紅灰、白灰、荖葉一樣致癌", options: { bullet: true, breakLine: true } },
-    { text: "檳榔纖維反覆摩擦黏膜造成傷口", options: { bullet: true, breakLine: true } },
-    { text: "其他：HPV（口咽癌）、不合適假牙、口腔衛生不良", options: { bullet: true } },
+    { text: "世界衛生組織的癌症研究機構把檳榔列為「確定會致癌」，不加紅灰、白灰也一樣", options: { bullet: true, breakLine: true } },
+    { text: "檳榔的粗纖維一直磨破嘴巴，造成反覆的傷口", options: { bullet: true, breakLine: true } },
+    { text: "其他：某些病毒感染、假牙不合、不刷牙", options: { bullet: true } },
   ], { x: 6.0, y: 1.9, w: 3.3, h: 2.8, fontSize: 13, color: HEX.ink, paraSpaceAfter: 6, valign: "top" });
   SRC(s, "葛應欽等（1995）台灣口腔癌與嚼檳榔、吸菸、酒精之關聯，引自國軍衛教資料；國健署");
   s.addNotes("28/89/123 倍出自 1995 年台灣研究，屬經典但較舊的數據；國健署 2022 年另指出嚼檳榔加菸酒，上呼吸消化道癌風險高 10.5 倍。");
@@ -188,8 +204,8 @@ const SRC = (s, t) => txt(s, "資料來源：" + t, { x: 0.5, y: 4.92, w: 9.0, h
   s = contentSlide("誰是高危險群", "成因與症狀");
   const risks = [
     [fa.FaSmoking, "30 歲以上吸菸或嚼檳榔者", "含已戒檳榔者"], [fa.FaUsers, "18 歲以上嚼檳榔原住民", "含已戒檳榔者"],
-    [fa.FaMale, "中壯年男性", "約 9 成患者為男性"], [fa.FaWineGlassAlt, "菸、酒、檳榔多重使用", "風險加乘最高"],
-    [fa.FaTruck, "需長時間提神的勞動工作者", "如貨運司機、建築工"], [fa.FaNotesMedical, "已有癌前病變或頭頸癌病史", "白斑、紅斑、黏膜下纖維化"],
+    [fa.FaMale, "中年男性", "每 10 個病人約 9 個是男生"], [fa.FaWineGlassAlt, "菸、酒、檳榔多重使用", "風險加乘最高"],
+    [fa.FaTruck, "需長時間提神的勞動工作者", "如貨運司機、建築工"], [fa.FaNotesMedical, "嘴巴已經有異常的人", "白斑、紅斑、嘴巴內側變硬"],
   ];
   for (let i = 0; i < risks.length; i++) {
     const col = i % 2, row = Math.floor(i / 2);
@@ -203,21 +219,21 @@ const SRC = (s, t) => txt(s, "資料來源：" + t, { x: 0.5, y: 4.92, w: 9.0, h
 
   // 9 Symptoms
   s = contentSlide("五大警訊：破、斑、硬、突、腫", "成因與症狀");
-  const sx = [["破", "黏膜破皮、潰瘍超過兩週未癒合"], ["斑", "出現不明原因的白斑或紅斑"], ["硬", "黏膜變硬變緊，嘴巴張不開"], ["突", "表面不規則突起（乳突或疣狀）"], ["腫", "臉或頸部腫塊、兩側不對稱"]];
+  const sx = [["破", "嘴破超過兩個禮拜還沒好"], ["斑", "出現擦不掉的白色或紅色斑塊"], ["硬", "嘴巴內側變硬，嘴巴張不開"], ["突", "長出凹凸不平的小肉塊"], ["腫", "臉或脖子腫起來、左右不一樣"]];
   sx.forEach((t, i) => {
     const x = 0.5 + i * 1.84;
     card(s, x, 1.25, 1.66, 2.55, i === 0 ? HEX.berry : HEX.rose, "sx-" + i);
     txt(s, t[0], { x, y: 1.4, w: 1.66, h: 0.95, fontSize: 48, bold: true, color: i === 0 ? HEX.white : HEX.berry, align: "center", valign: "middle" });
     txt(s, t[1], { x: x + 0.15, y: 2.45, w: 1.36, h: 1.2, fontSize: 13, color: i === 0 ? HEX.white : HEX.ink, align: "center", valign: "top" });
   });
-  txt(s, "其他症狀：口腔出血或麻木、牙齒鬆動、吞嚥或說話困難、持續口臭、體重減輕", { x: 0.5, y: 3.95, w: 9.0, h: 0.4, fontSize: 14, color: HEX.ink });
-  txt(s, "早期常不痛，容易被當成一般嘴破而延誤就醫", { x: 0.5, y: 4.38, w: 9.0, h: 0.4, fontSize: 14, bold: true, color: HEX.berry });
+  txt(s, "其他：嘴巴流血或麻麻的、牙齒突然鬆動、吞東西或說話困難、一直變瘦", { x: 0.5, y: 3.95, w: 9.0, h: 0.4, fontSize: 14, color: HEX.ink });
+  txt(s, "早期常常不會痛，很多人以為只是嘴破，自己擦藥而拖延", { x: 0.5, y: 4.38, w: 9.0, h: 0.4, fontSize: 14, bold: true, color: HEX.berry });
   SRC(s, "衛福部國健署「破斑硬突腫」口腔癌警訊");
 
   // 10 Prevention
   pres.addSection({ title: "預防與治療" });
   s = contentSlide("預防：拒菸檳、定期篩、早治療", "預防與治療");
-  const prev = [[fa.FaBan, "拒菸檳", "不嚼檳榔、不吸菸、少喝酒；戒檳 10 年風險可降 17%–51%", HEX.berry], [fa.FaSearch, "定期篩", "公費口腔黏膜檢查，每 2 年 1 次，約 3 分鐘", HEX.teal], [fa.FaHospital, "早治療", "篩檢陽性就轉介切片確診，及早治療", HEX.ink]];
+  const prev = [[fa.FaBan, "拒菸檳", "不吃檳榔、不抽菸、少喝酒；戒檳榔 10 年，風險可降約二到五成", HEX.berry], [fa.FaSearch, "定期篩", "政府免費幫你檢查嘴巴，每 2 年 1 次，只要 3 分鐘、不會痛", HEX.teal], [fa.FaHospital, "早治療", "檢查有異常，就到大醫院切一小塊化驗，早點治療", HEX.ink]];
   for (let i = 0; i < prev.length; i++) {
     const x = 0.5 + i * 3.05;
     card(s, x, 1.25, 2.85, 2.0, i === 1 ? HEX.mint : HEX.rose, "prev-" + i);
@@ -225,38 +241,38 @@ const SRC = (s, t) => txt(s, "資料來源：" + t, { x: 0.5, y: 4.92, w: 9.0, h
     txt(s, prev[i][1], { x: x + 0.95, y: 1.42, w: 1.8, h: 0.6, fontSize: 20, bold: true, color: prev[i][3], valign: "middle" });
     txt(s, prev[i][2], { x: x + 0.2, y: 2.15, w: 2.5, h: 1.0, fontSize: 13, color: HEX.ink, valign: "top" });
   }
-  txt(s, [{ text: "-26%", options: { fontSize: 36, bold: true, color: HEX.teal } }, { text: "  口腔癌死亡風險", options: { fontSize: 15, color: HEX.ink } }], { x: 0.5, y: 3.45, w: 4.4, h: 0.7, valign: "middle" });
-  txt(s, [{ text: "-21%", options: { fontSize: 36, bold: true, color: HEX.teal } }, { text: "  晚期口腔癌發生風險", options: { fontSize: 15, color: HEX.ink } }], { x: 5.1, y: 3.45, w: 4.4, h: 0.7, valign: "middle" });
-  txt(s, "定期口腔黏膜檢查的成效；篩檢發現的病變約 77% 為癌前病變或 0–1 期早期癌", { x: 0.5, y: 4.2, w: 9.0, h: 0.5, fontSize: 13, color: HEX.grey });
+  txt(s, [{ text: "-26%", options: { fontSize: 36, bold: true, color: HEX.teal } }, { text: "  因口腔癌過世的風險", options: { fontSize: 15, color: HEX.ink } }], { x: 0.5, y: 3.45, w: 4.4, h: 0.7, valign: "middle" });
+  txt(s, [{ text: "-21%", options: { fontSize: 36, bold: true, color: HEX.teal } }, { text: "  拖到很嚴重才發現的風險", options: { fontSize: 15, color: HEX.ink } }], { x: 5.1, y: 3.45, w: 4.4, h: 0.7, valign: "middle" });
+  txt(s, "定期檢查嘴巴的效果；檢查找到的問題，約 8 成是還沒變成癌或很早期的", { x: 0.5, y: 4.2, w: 9.0, h: 0.5, fontSize: 13, color: HEX.grey });
   SRC(s, "衛福部「定期口腔黏膜檢查 降低 26% 死亡風險」（引臺大研究）");
 
   // 11 Screening & policy
-  s = contentSlide("公費口腔黏膜檢查與最新政策", "預防與治療");
+  s = contentSlide("免費嘴巴檢查與政府政策", "預防與治療");
   s.addTable([
     [{ text: "項目", options: { bold: true, color: HEX.white, fill: { color: HEX.berry } } }, { text: "內容", options: { bold: true, color: HEX.white, fill: { color: HEX.berry } } }],
-    ["補助對象", "30 歲以上嚼檳榔（含已戒）或吸菸者；18 歲以上嚼檳榔（含已戒）原住民"],
-    ["頻率", "每 2 年 1 次，免費"],
-    ["地點", "帶健保卡到健保特約牙科或耳鼻喉科"],
-    ["成果", "每輪約找出近 3,000 名癌前病變、1,000 多名口腔癌"],
+    ["誰可以做", "30 歲以上有吃檳榔（含已戒）或抽菸的人；18 歲以上有吃檳榔（含已戒）的原住民"],
+    ["多久一次", "每 2 年 1 次，免費"],
+    ["去哪裡做", "帶健保卡到有健保的牙科或耳鼻喉科"],
+    ["有沒有用", "每 2 年約找出近 3,000 個警告病變、1,000 多個口腔癌病人"],
   ], { x: 0.5, y: 1.25, w: 5.2, colW: [1.2, 4.0], fontSize: 12, fontFace: FONT, color: HEX.ink, border: { type: "solid", pt: 0.5, color: "E2CDD5" }, fill: { color: HEX.white }, valign: "middle", rowH: 0.55 });
   card(s, 6.0, 1.25, 3.5, 3.5, HEX.mint, "policy-card");
   txt(s, "政策動態", { x: 6.2, y: 1.38, w: 3.1, h: 0.4, fontSize: 16, bold: true, color: HEX.teal });
   txt(s, [
-    { text: "114 年起擴大癌篩；115 年元旦納入胃癌成「六癌篩檢」", options: { bullet: true, breakLine: true } },
-    { text: "113 年五癌篩檢約 481.2 萬人次，找出 50,712 例癌前病變", options: { bullet: true, breakLine: true } },
-    { text: "《檳榔健康危害防制法》草案 113/12 預告，2026 年仍未送立法院，監察院已糾正", options: { bullet: true } },
+    { text: "2025 年起放寬免費癌症檢查；2026 年起可免費檢查 6 種癌症", options: { bullet: true, breakLine: true } },
+    { text: "2024 年免費癌症檢查約 481 萬人次，找出約 5 萬個警告病變", options: { bullet: true, breakLine: true } },
+    { text: "管理檳榔的法律草案 2024 年底提出，2026 年仍未送立法院，監察院已批評", options: { bullet: true } },
   ], { x: 6.2, y: 1.85, w: 3.1, h: 2.8, fontSize: 12, color: HEX.ink, paraSpaceAfter: 6, valign: "top" });
   SRC(s, "國健署新聞稿；IQ 健康網（2026 癌篩）；聯合報、工商時報（2026）");
 
   // 12 Treatment
   s = contentSlide("主要治療方式", "預防與治療");
   const tx = [
-    [fa.FaCut, "手術切除", "首選；切除腫瘤＋頸部淋巴結廓清，以皮瓣重建"],
-    [fa.FaRadiation, "放射治療", "術後輔助或無法手術者；副作用：口乾、黏膜炎"],
-    [fa.FaSyringe, "同步化放療", "術後高復發風險或局部晚期；常用順鉑"],
-    [fa.FaPills, "化學治療", "晚期、復發或轉移的全身治療"],
-    [fa.FaCrosshairs, "標靶治療", "抗 EGFR 藥物 cetuximab，合併化放療"],
-    [fa.FaShieldVirus, "免疫治療", "PD-1 抑制劑；健保第一線以 CPS ≥ 20 為主"],
+    [fa.FaCut, "開刀", "最主要的治療；切掉腫瘤，再從手或腳取皮肉補回去"],
+    [fa.FaRadiation, "電療", "用高能量射線照癌細胞；會口乾、嘴破"],
+    [fa.FaSyringe, "電療＋化療", "容易復發或太大切不掉時，兩種一起做"],
+    [fa.FaPills, "化療", "用藥物殺全身的癌細胞；會想吐、掉頭髮"],
+    [fa.FaCrosshairs, "標靶治療", "像導彈一樣，專打癌細胞的特定目標"],
+    [fa.FaShieldVirus, "免疫治療", "拆穿癌細胞的偽裝，讓身體自己去打"],
   ];
   for (let i = 0; i < tx.length; i++) {
     const col = i % 3, row = Math.floor(i / 3);
@@ -269,27 +285,27 @@ const SRC = (s, t) => txt(s, "資料來源：" + t, { x: 0.5, y: 4.92, w: 9.0, h
   SRC(s, "臺北榮總口腔癌治療準則；臺大醫院健康電子報；聯合報（免疫治療給付）");
 
   // 13 Survival chart
-  s = contentSlide("越早發現，存活率越高", "預防與治療");
+  s = contentSlide("越早發現，越有機會活下來", "預防與治療");
   s.addChart(pres.charts.BAR, [{ name: "五年存活率（%）", labels: ["第 1 期", "第 2 期", "第 3 期", "第 4 期"], values: [85, 70, 60, 30] }], {
     x: 0.5, y: 1.2, w: 5.4, h: 3.6, barDir: "col", chartColors: [HEX.teal, "5FA39C", "B98A9A", HEX.berry], varyColors: true,
-    showValue: true, dataLabelPosition: "outEnd", dataLabelFontSize: 14, dataLabelFontFace: "+mn-lt", dataLabelColor: HEX.ink, dataLabelFormatCode: "0\"%\"",
+    showValue: true, dataLabelPosition: "outEnd", dataLabelFontSize: 14, dataLabelFontFace: "+mn-lt", dataLabelColor: HEX.ink, dataLabelFormatCode: "0\"人\"",
     catAxisLabelColor: HEX.ink, catAxisLabelFontSize: 13, catAxisLabelFontFace: "+mn-lt", valAxisHidden: true, valAxisMinVal: 0, valAxisMaxVal: 100,
     valGridLine: { style: "none" }, catGridLine: { style: "none" }, showLegend: false,
-    showTitle: true, title: "口腔癌分期五年存活率（醫師引述概估值）", titleFontSize: 13, titleColor: HEX.grey, titleFontFace: "+mn-lt",
+    showTitle: true, title: "每 100 位病人中，活超過 5 年的人數（大約值）", titleFontSize: 13, titleColor: HEX.grey, titleFontFace: "+mn-lt",
   });
   txt(s, "8 成以上", { x: 6.2, y: 1.4, w: 3.3, h: 0.8, fontSize: 36, bold: true, color: HEX.teal });
-  txt(s, "早期口腔癌五年存活率（國健署相關研究）", { x: 6.2, y: 2.2, w: 3.3, h: 0.6, fontSize: 14, color: HEX.ink, valign: "top" });
-  txt(s, "頭頸癌超過 7 成確診時已是第三期以上（新竹臺大分院醫師，2026）", { x: 6.2, y: 3.1, w: 3.3, h: 1.0, fontSize: 14, color: HEX.berry, bold: true, valign: "top" });
+  txt(s, "早期發現的病人，活超過 5 年的比例（國健署相關研究）", { x: 6.2, y: 2.2, w: 3.3, h: 0.6, fontSize: 14, color: HEX.ink, valign: "top" });
+  txt(s, "但超過 7 成的頭頸部癌症病人，被發現時已經比較嚴重（醫師，2026）", { x: 6.2, y: 3.1, w: 3.3, h: 1.0, fontSize: 14, color: HEX.berry, bold: true, valign: "top" });
   SRC(s, "NOWnews、TVBS 醫師訪談（各院數字略有差異，第 1 期取 80%–90% 中間值）");
 
   // 14 News
   pres.addSection({ title: "實例" });
   s = contentSlide("新聞實例", "實例");
   const news = [
-    ["2026/06", "監察院糾正行政院", "《檳榔健康危害防制法》草案延宕近 5 年仍未送立法院", "聯合報"],
-    ["2026/03", "45 歲男長期菸檳", "醫師：頭頸癌以口腔癌最多，逾 7 成確診已第三期以上", "TVBS 健康 2+1"],
-    ["2025/09", "藝人江國賓口腔腫瘤", "年輕時吸菸嚼檳榔，切片為良性並切除；醫師提醒需終生追蹤", "TVBS 健康 2+1"],
-    ["2020", "嘴破 2 個月沒好", "新竹 36 歲男子長期嚼檳提神，自行擦藥，就醫已第四期", "TVBS 新聞"],
+    ["2026/06", "監察院批評行政院", "管理檳榔的法律拖了很久，到現在還沒送立法院", "聯合報"],
+    ["2026/03", "45 歲男長期菸檳", "醫師：頭頸部癌症以口腔癌最多，逾 7 成發現時已較嚴重", "TVBS 健康 2+1"],
+    ["2025/09", "藝人江國賓口腔腫瘤", "年輕時抽菸吃檳榔，化驗是良性（不是癌），醫師提醒要一輩子定期檢查", "TVBS 健康 2+1"],
+    ["2020", "嘴破 2 個月沒好", "36 歲男子長期吃檳榔提神，嘴破自己擦藥，看醫生時已是最嚴重的第 4 期", "TVBS 新聞"],
   ];
   news.forEach((n, i) => {
     const col = i % 2, row = Math.floor(i / 2);
@@ -331,7 +347,7 @@ const SRC = (s, t) => txt(s, "資料來源：" + t, { x: 0.5, y: 4.92, w: 9.0, h
   // 17 Closing
   s = pres.addSlide({ masterName: "DARK", sectionTitle: "分工與來源" });
   s.addText("拒菸檳、定期篩、早治療", { placeholder: "title" });
-  s.addText("口腔癌是最容易預防的癌症之一 —— 提醒身邊有菸檳習慣的家人，每 2 年做一次口腔黏膜檢查", { placeholder: "body" });
+  s.addText("口腔癌是最容易預防的癌症之一 —— 提醒身邊有菸檳習慣的家人，每 2 年做一次免費嘴巴檢查", { placeholder: "body" });
   await iconCircle(s, fa.FaHandHoldingHeart, 7.9, 0.5, 1.2, HEX.teal, HEX.white);
   txt(s, "謝謝聆聽．Q & A", { x: 0.6, y: 4.5, w: 8.8, h: 0.4, fontSize: 16, color: "D9C3CB" });
 
